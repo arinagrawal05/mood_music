@@ -14,46 +14,55 @@ export function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [usingFallback, setUsingFallback] = useState(false)
-  const [isBollywood, setIsBollywood] = useState(false)
 
   const fetchDashboardData = async (useFallback = false) => {
     try {
       setError(null)
       setLoading(true)
-      setIsBollywood(false)
 
-      // Fetch top songs
+      // Fetch top Bollywood songs
       let topData: Song[] = []
       try {
         const topEndpoint = useFallback ? "/api/fallback-songs" : "/api/top-songs"
-        const topResponse = await fetch(topEndpoint)
+        const topResponse = await fetch(topEndpoint, {
+          cache: "no-store",
+        })
+
         if (!topResponse.ok && !useFallback) {
           console.warn(`Failed to fetch top songs: ${topResponse.status}, using fallback`)
           const fallbackResponse = await fetch("/api/fallback-songs")
-          topData = await fallbackResponse.json()
+
+          // Get the response text first and try to parse it
+          const responseText = await fallbackResponse.text()
+          try {
+            topData = JSON.parse(responseText)
+          } catch (parseError) {
+            console.error("Failed to parse fallback response:", parseError)
+            throw new Error("Failed to parse fallback response")
+          }
+
           setUsingFallback(true)
         } else {
-          topData = await topResponse.json()
-
-          // Check if these are Bollywood songs by looking at genre or artist names
-          const isBollywoodMusic = topData.some(
-            (song) =>
-              song.genre?.toLowerCase().includes("bollywood") ||
-              song.genre?.toLowerCase().includes("indian") ||
-              song.artist.toLowerCase().includes("kumar") ||
-              song.artist.toLowerCase().includes("khan") ||
-              song.artist.toLowerCase().includes("singh") ||
-              song.artist.toLowerCase().includes("kapoor"),
-          )
-
-          setIsBollywood(isBollywoodMusic)
+          // Get the response text first and try to parse it
+          const responseText = await topResponse.text()
+          try {
+            topData = JSON.parse(responseText)
+          } catch (parseError) {
+            console.error("Failed to parse top songs response:", parseError)
+            throw new Error("Failed to parse top songs response")
+          }
         }
       } catch (err) {
         console.error("Error fetching top songs:", err)
         if (!useFallback) {
-          const fallbackResponse = await fetch("/api/fallback-songs")
-          topData = await fallbackResponse.json()
-          setUsingFallback(true)
+          try {
+            const fallbackResponse = await fetch("/api/fallback-songs")
+            const responseText = await fallbackResponse.text()
+            topData = JSON.parse(responseText)
+            setUsingFallback(true)
+          } catch (fallbackError) {
+            console.error("Error parsing fallback data:", fallbackError)
+          }
         }
       }
       setTopSongs(topData)
@@ -62,28 +71,58 @@ export function Dashboard() {
       let newData: Song[] = []
       try {
         const newEndpoint = useFallback ? "/api/fallback-songs" : "/api/new-releases"
-        const newResponse = await fetch(newEndpoint)
+        const newResponse = await fetch(newEndpoint, {
+          cache: "no-store",
+        })
+
         if (!newResponse.ok && !useFallback) {
           console.warn(`Failed to fetch new releases: ${newResponse.status}, using fallback`)
           const fallbackResponse = await fetch("/api/fallback-songs")
-          newData = await fallbackResponse.json()
+          const responseText = await fallbackResponse.text()
+          try {
+            newData = JSON.parse(responseText)
+          } catch (parseError) {
+            console.error("Failed to parse fallback response:", parseError)
+            throw new Error("Failed to parse fallback response")
+          }
           setUsingFallback(true)
         } else {
-          newData = await newResponse.json()
+          const responseText = await newResponse.text()
+          try {
+            newData = JSON.parse(responseText)
+          } catch (parseError) {
+            console.error("Failed to parse new releases response:", parseError)
+            throw new Error("Failed to parse new releases response")
+          }
         }
       } catch (err) {
         console.error("Error fetching new releases:", err)
         if (!useFallback) {
-          const fallbackResponse = await fetch("/api/fallback-songs")
-          newData = await fallbackResponse.json()
-          setUsingFallback(true)
+          try {
+            const fallbackResponse = await fetch("/api/fallback-songs")
+            const responseText = await fallbackResponse.text()
+            newData = JSON.parse(responseText)
+            setUsingFallback(true)
+          } catch (fallbackError) {
+            console.error("Error parsing fallback data:", fallbackError)
+          }
         }
       }
       setNewReleases(newData)
     } catch (error) {
       console.error("Error fetching dashboard data:", error)
       setError(error instanceof Error ? error.message : "Failed to load dashboard data")
-      setUsingFallback(true)
+
+      // Always try to load fallback data on error
+      try {
+        const fallbackResponse = await fetch("/api/fallback-songs")
+        const fallbackData = await fallbackResponse.json()
+        setTopSongs(fallbackData)
+        setNewReleases(fallbackData)
+        setUsingFallback(true)
+      } catch (fallbackError) {
+        console.error("Error fetching fallback data:", fallbackError)
+      }
     } finally {
       setLoading(false)
     }
@@ -157,9 +196,7 @@ export function Dashboard() {
         </Alert>
       )}
 
-      {topSongs.length > 0 && (
-        <SongList songs={topSongs} title={isBollywood ? "Top Bollywood Hits" : "Top Songs"} variant="default" />
-      )}
+      {topSongs.length > 0 && <SongList songs={topSongs} title="Top Bollywood Hits" variant="default" />}
 
       {newReleases.length > 0 && <SongList songs={newReleases} title="New Releases" variant="default" />}
 

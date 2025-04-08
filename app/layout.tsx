@@ -11,7 +11,6 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Mood Music - Find songs that match your vibe",
   description: "Enter a mood or vibe and discover songs that match it",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -22,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           <PlayerProvider>
             {children}
             <GlobalPlayer />
@@ -32,6 +31,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-import './globals.css'

@@ -37,7 +37,7 @@ export function Dashboard() {
           try {
             topData = JSON.parse(responseText)
           } catch (parseError) {
-            console.error("Failed to parse fallback response:", parseError)
+            console.error("Failed while fetching to parse fallback response:", parseError)
             throw new Error("Failed to parse fallback response")
           }
 
@@ -78,7 +78,7 @@ export function Dashboard() {
         })
 
         if (!newResponse.ok && !useFallback) {
-          console.warn(`Failed to fetch new releases: ${newResponse.status}, using fallback`)
+          console.warn(`Failed to fetch new releases: ${newResponse.status}, using fallback,Please try again`)
           const fallbackResponse = await fetch("/api/fallback-songs")
           const responseText = await fallbackResponse.text()
           try {

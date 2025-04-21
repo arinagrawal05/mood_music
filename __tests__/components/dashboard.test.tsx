@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import { Dashboard } from "@/components/dashboard"
 import { PlayerProvider } from "@/lib/player-context"
+import { json } from "stream/consumers"
 
 // Mock song data
 const mockSongs = [
@@ -71,3 +72,4 @@ describe("Dashboard", () => {
     })
   })
 })
+

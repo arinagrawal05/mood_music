@@ -5,6 +5,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PlayerProvider } from "@/lib/player-context"
 import { GlobalPlayer } from "@/components/global-player"
+import { Component } from "lucide-react"
 
 const inter = Inter({ subsets: ["latin"] })
 

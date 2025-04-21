@@ -1,5 +1,5 @@
 "use client"
-//Buiding dashboard
+//Buiding the main dashboard
 import { useEffect, useState } from "react"
 import { SongList } from "@/components/song-list"
 import type { Song } from "@/lib/types"
@@ -32,7 +32,7 @@ export function Dashboard() {
           console.warn(`Failed to fetch top songs: ${topResponse.status}, using fallback`)
           const fallbackResponse = await fetch("/api/fallback-songs")
 
-          // Get the response text first and try to parse it
+          // Get the response text first and trying to parse it
           const responseText = await fallbackResponse.text()
           try {
             topData = JSON.parse(responseText)
@@ -62,14 +62,14 @@ export function Dashboard() {
             setUsingFallback(true)
           } catch (fallbackError) {
             console.error("Error parsing fallback data:", fallbackError)
-            // For tests, provide default data if all else fails
+            // For tests, provide default data in case all else fails
             topData = []
           }
         }
       }
       setTopSongs(topData)
 
-      // Fetch new releases
+      // Fetch new releases first
       let newData: Song[] = []
       try {
         const newEndpoint = useFallback ? "/api/fallback-songs" : "/api/new-releases"

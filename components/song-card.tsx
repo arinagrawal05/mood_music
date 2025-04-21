@@ -11,7 +11,7 @@ interface SongCardProps {
   song: Song
   variant?: "default" | "compact" | "row"
 }
-
+// we are using the variant prop to determine the layout of the card
 export function SongCard({ song, variant = "default" }: SongCardProps) {
   const { playSong, pauseSong, currentSong, isPlaying } = usePlayer()
 

@@ -16,7 +16,7 @@ export default function Home() {
         <TabsList className="grid w-full grid-cols-3 mb-8">
           <TabsTrigger value="home">Home</TabsTrigger>
           <TabsTrigger value="search">Search</TabsTrigger>
-          <TabsTrigger value="mood">Mood Suggestions</TabsTrigger>
+          <TabsTrigger value="mood">AI Mood Suggestions</TabsTrigger>
         </TabsList>
 
         <TabsContent value="home" className="mt-0">
@@ -29,7 +29,7 @@ export default function Home() {
 
         <TabsContent value="mood" className="mt-0">
           <p className="text-muted-foreground mb-8">
-            Enter a mood or vibe and we'll suggest songs with available previews that match it.
+            Enter a mood or vibe and we'll suggest songs with available previews that match it.We will make sure you love it.
           </p>
           <MoodForm />
         </TabsContent>

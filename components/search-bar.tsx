@@ -16,7 +16,7 @@ export function SearchBar() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(query)
-    }, 500) // 500ms delay
+    }, 550) // 550ms delay
 
     return () => clearTimeout(timer)
   }, [query])
@@ -61,7 +61,7 @@ export function SearchBar() {
 
       const contentType = response.headers.get("content-type")
       if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Server returned non-JSON response. Please try again later.")
+        throw new Error("Server returned non-JSON response. Please try again later.Thanks")
       }
 
       const data = await response.json()

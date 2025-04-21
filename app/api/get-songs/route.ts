@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import type { GeminiSongSuggestion, ItunesTrack } from "@/lib/types"
 
-// Gemini API for song suggestions
+// Using Gemini API for song suggestions
 async function getSongSuggestions(mood: string): Promise<GeminiSongSuggestion[]> {
   const apiKey = process.env.GEMINI_API_KEY
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`

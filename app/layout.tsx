@@ -13,21 +13,3 @@ export const metadata: Metadata = {
   description: "Enter a mood or vibe and discover songs that match it",
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          <PlayerProvider>
-            {children}
-            <GlobalPlayer />
-          </PlayerProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  )
-}

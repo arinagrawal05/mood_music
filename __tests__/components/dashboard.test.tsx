@@ -18,19 +18,19 @@ const mockSongs = [
   },
   {
     id: "2",
-    title: "Swag Se Swagat",
+    title: "Swag- Se Swagat",
     artist: "Vishal Dadlani & Neha Bhasin",
     albumArt: "/placeholder.svg?height=300&width=300&text=Swag+Se+Swagat",
     previewUrl: "https://example.com/preview.mp3",
     duration: 200000,
-    album: "Tiger Zinda Hai",
+    album: "Tiger Zinda Hai..",
     itunesUrl: "#",
     releaseDate: "2017-11-21T00:00:00Z",
     genre: "Bollywood",
   },
 ]
 
-// Mock fetch
+// Mock fetch system
 const originalFetch = global.fetch
 beforeEach(() => {
   global.fetch = jest.fn((url) => {

@@ -1,4 +1,4 @@
-"use client"  //Initiated
+"use client"  //Initiated theme system
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import type { ThemeProviderProps } from "next-themes"
 

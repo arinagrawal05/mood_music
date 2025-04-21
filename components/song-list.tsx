@@ -1,6 +1,6 @@
 import type { Song } from "@/lib/types"
 import { SongCard } from "@/components/song-card"
-
+//Initial Songs
 interface SongListProps {
   songs: Song[]
   variant?: "default" | "compact" | "row"

@@ -6,16 +6,16 @@ import { describe, it, expect, jest } from "@jest/globals"
 
 // Mock song data
 const mockSong = {
-  id: "123",
+  id: "132",
   title: "Test Song",
   artist: "Test Artist",
   albumArt: "/placeholder.svg",
-  previewUrl: "https://example.com/test.mp3",
-  duration: 180000,
-  album: "Test Album",
-  itunesUrl: "https://example.com",
-  releaseDate: "2023-01-01",
-  genre: "Pop",
+  previewUrl: "https://example1.com/test.mp3",
+  duration: 18000,
+  album: "Test-Album",
+  itunesUrl: "https://example1.com",
+  releaseDate: "2004-11-06",
+  genre: "Country Music",
 }
 
 // Mock HTMLMediaElement

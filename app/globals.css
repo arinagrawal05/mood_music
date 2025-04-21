@@ -11,7 +11,7 @@ body {
     text-wrap: balance;
   }
 }
-
+/*Dark Set-up*/
 @layer base {
   :root {
     --background: 0 0% 100%;
